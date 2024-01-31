@@ -36,18 +36,18 @@ from google.oauth2 import service_account
 
 
 
-#CLIENT_SECRET_FILE_URL = 'https://drive.google.com/file/d/1SbWXBriFFMeJmWWcM_RMS4VqZX7_Eb7U/view?usp=sharing'
-#CLIENT_SECRET_FILE_URL = 'https://drive.google.com/uc?id=' + CLIENT_SECRET_FILE_URL.split('/')[-2]
+CLIENT_SECRET_FILE_URL = 'https://drive.google.com/file/d/1SbWXBriFFMeJmWWcM_RMS4VqZX7_Eb7U/view?usp=sharing'
+CLIENT_SECRET_FILE_URL = 'https://drive.google.com/uc?id=' + CLIENT_SECRET_FILE_URL.split('/')[-2]
 
-#response = requests.get(CLIENT_SECRET_FILE_URL)
+response = requests.get(CLIENT_SECRET_FILE_URL)
 
 # Check if request was successful
-#if response.status_code == 200:
-    #with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
+if response.status_code == 200:
+    with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
         # Write the JSON content to the temporary file
-        #temp_file.write(response.text)
+        temp_file.write(response.text)
         # Get the path of the temporary file
-CLIENT_SECRET_FILE = 'https://raw.githubusercontent.com/Timilehin1998/HADR/main/client_secret.json'
+	CLIENT_SECRET_FILE = temp_file.name
 
 
     
