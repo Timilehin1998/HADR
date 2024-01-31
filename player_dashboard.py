@@ -46,7 +46,6 @@ if response.status_code == 200:
     with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
         # Write the JSON content to the temporary file
         temp_file.write(response.text)
-        # Get the path of the temporary file
 	CLIENT_SECRET_FILE = temp_file.name
 
 
