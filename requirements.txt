@@ -11,9 +11,6 @@ dash_html_components
 numpy
 googleapiclient
 google
-googleapiclient
 collections
 google_auth_oauthlib
-google
-google
 pickle
