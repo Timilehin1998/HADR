@@ -47,7 +47,9 @@ from google.oauth2 import service_account
         # Write the JSON content to the temporary file
         #temp_file.write(response.text)
         # Get the path of the temporary file
-CLIENT_SECRET_FILE = client_secret.json
+CLIENT_SECRET_FILE = 'https://raw.githubusercontent.com/Timilehin1998/HADR/main/client_secret.json'
+
+
     
 
 API_NAME = 'drive'
