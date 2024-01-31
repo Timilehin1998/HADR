@@ -30,6 +30,7 @@ from google.auth.transport.requests import Request
 import urllib.request, json
 from urllib.request import urlopen 
 import requests
+import tempfile
 
 
 
@@ -41,7 +42,11 @@ response = requests.get(CLIENT_SECRET_FILE_URL)
 
 # Check if request was successful
 if response.status_code == 200:
-    CLIENT_SECRET_FILE = response.content
+    with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
+        # Write the JSON content to the temporary file
+        temp_file.write(response.text)
+        # Get the path of the temporary file
+        CLIENT_SECRET_FILE = temp_file.name
     
 
 API_NAME = 'drive'
