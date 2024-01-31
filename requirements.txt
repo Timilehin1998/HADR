@@ -9,11 +9,11 @@ matplotlib.colors
 dash_core_components
 dash_html_components
 numpy
-googleapiclient.http
-google.oauth2 
-googleapiclient.discovery
+googleapiclient
+google
+googleapiclient
 collections
-google_auth_oauthlib.flow
-google.oauth2.credentials
-google.auth.transport.requests
+google_auth_oauthlib
+google
+google
 pickle
