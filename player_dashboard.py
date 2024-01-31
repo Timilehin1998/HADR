@@ -29,6 +29,7 @@ from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 import urllib.request, json
 from urllib.request import urlopen 
+import requests
 
 
 
@@ -36,12 +37,12 @@ from urllib.request import urlopen
 CLIENT_SECRET_FILE_URL = 'https://drive.google.com/file/d/1SbWXBriFFMeJmWWcM_RMS4VqZX7_Eb7U/view?usp=sharing'
 CLIENT_SECRET_FILE_URL = 'https://drive.google.com/uc?id=' + CLIENT_SECRET_FILE_URL.split('/')[-2]
 
-# store the response of URL 
-response = urlopen(CLIENT_SECRET_FILE_URL) 
-  
-# storing the JSON response  
-# from url in data 
-CLIENT_SECRET_FILE = json.loads(response.read())
+response = requests.get(CLIENT_SECRET_FILE_URL)
+
+# Check if request was successful
+if response.status_code == 200:
+    json_bytes = response.content
+    CLIENT_SECRET_FILE = io.BytesIO(json_bytes) 
 
 API_NAME = 'drive'
 API_VERSION = 'v3'
