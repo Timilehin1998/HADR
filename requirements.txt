@@ -1,7 +1,7 @@
 dash
 pandas
 gunicorn
-dash_bootstrap_components
+dash_bootstrap_components==1.0.0
 plotly.express
 dash_mantine_components
 datetime
