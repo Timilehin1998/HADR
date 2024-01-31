@@ -34,8 +34,8 @@ from google.auth.transport.requests import Request
 
 
 
-CLIENT_SECRET_FILE = 'https://drive.google.com/file/d/1SbWXBriFFMeJmWWcM_RMS4VqZX7_Eb7U/view?usp=sharing'
-CLIENT_SECRET_FILE = 'https://drive.google.com/uc?id=' + CLIENT_SECRET_FILE.split('/')[-2]
+#CLIENT_SECRET_FILE = 'https://drive.google.com/file/d/1SbWXBriFFMeJmWWcM_RMS4VqZX7_Eb7U/view?usp=sharing'
+#CLIENT_SECRET_FILE = 'https://drive.google.com/uc?id=' + CLIENT_SECRET_FILE.split('/')[-2]
 API_NAME = 'drive'
 API_VERSION = 'v3'
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -1214,11 +1214,8 @@ def update_data_table(n_clicks, input_value, cargo_acq, maritime_acq, cargo_st, 
         
             media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
             
-            file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-            #print (file)
-            #file1 = drive.CreateFile({"mimeType": "text/csv"})
-            #file_metadata.SetContentFile("csv_content")
-            #file_metadata.Upload()
+            #file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+           
             
             # Return the DataFrame records if the upload is successful
             return new_data.to_dict('records')
