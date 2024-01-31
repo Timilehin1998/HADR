@@ -1202,17 +1202,17 @@ def update_data_table(n_clicks, input_value, cargo_acq, maritime_acq, cargo_st, 
         
 
             # Authenticate with Google Drive API
-            service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
-            csv_content = new_data.to_csv(index=False)
+            #service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+            #csv_content = new_data.to_csv(index=False)
             
             # Upload CSV to Google Drive
-            file_metadata = {
-                'name': 'player_1',
-                'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
-                'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            }
+            #file_metadata = {
+                #'name': 'player_1',
+                #'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
+                #'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            #}
         
-            media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
+            #media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
             
             #file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
            
