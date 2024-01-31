@@ -41,8 +41,8 @@ response = requests.get(CLIENT_SECRET_FILE_URL)
 
 # Check if request was successful
 if response.status_code == 200:
-    json_bytes = response.content
-    CLIENT_SECRET_FILE = io.BytesIO(json_bytes) 
+    CLIENT_SECRET_FILE = response.content
+    
 
 API_NAME = 'drive'
 API_VERSION = 'v3'
