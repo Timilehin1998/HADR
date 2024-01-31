@@ -3,7 +3,7 @@ pandas
 gunicorn
 dash_bootstrap_components
 plotly.express
-dash_mantime_components
+dash_mantine_components
 datetime
 matplotlib.colors
 dash_core_components
