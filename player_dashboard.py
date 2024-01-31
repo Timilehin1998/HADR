@@ -62,6 +62,7 @@ SCOPES = ['https://www.googleapis.com/auth/drive']
 # Initialize the Dash app
 #app = dash.Dash(__name__)
 
+
 existing_data_url = 'https://drive.google.com/file/d/1T6iOOp5kD-hMVBmANRMGFCo3Gp2uTxqc/view?usp=sharing'
 existing_data_url='https://drive.google.com/uc?id=' + existing_data_url.split('/')[-2]
 existing_data = pd.read_csv(existing_data_url)
@@ -384,6 +385,7 @@ BODY = dbc.Container(
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 app.layout = html.Div(children=[NAVBAR,BODY])
 
 # Callback to handle disabling/enabling dropdowns based on selections
