@@ -27,15 +27,17 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
+import urllib.request, json
 
 
 
 
+CLIENT_SECRET_FILE_URL = 'https://drive.google.com/file/d/1SbWXBriFFMeJmWWcM_RMS4VqZX7_Eb7U/view?usp=sharing'
+CLIENT_SECRET_FILE_URL = 'https://drive.google.com/uc?id=' + CLIENT_SECRET_FILE_URL.split('/')[-2]
 
+with urllib.request.urlopen(CLIENT_SECRET_FILE_URL) as url:
+    CLIENT_SECRET_FILE = json.load(url)
 
-
-#CLIENT_SECRET_FILE = 'https://drive.google.com/file/d/1SbWXBriFFMeJmWWcM_RMS4VqZX7_Eb7U/view?usp=sharing'
-#CLIENT_SECRET_FILE = 'https://drive.google.com/uc?id=' + CLIENT_SECRET_FILE.split('/')[-2]
 API_NAME = 'drive'
 API_VERSION = 'v3'
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -1202,19 +1204,19 @@ def update_data_table(n_clicks, input_value, cargo_acq, maritime_acq, cargo_st, 
         
 
             # Authenticate with Google Drive API
-            #service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
-            #csv_content = new_data.to_csv(index=False)
+            service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+            csv_content = new_data.to_csv(index=False)
             
             # Upload CSV to Google Drive
-            #file_metadata = {
-                #'name': 'player_1',
-                #'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
-                #'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            #}
+            file_metadata = {
+                'name': 'player_1',
+                'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
+                'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
         
-            #media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
+            media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
             
-            #file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+            file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
            
             
             # Return the DataFrame records if the upload is successful
