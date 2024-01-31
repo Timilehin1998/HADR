@@ -1,5 +1,4 @@
 dash
-io
 pandas
 gunicorn
 dash_bootstrap_components
@@ -11,7 +10,6 @@ dash_core_components
 dash_html_components
 plotly.graph_objs
 numpy
-os
 googleapiclient.http
 google.oauth2 
 googleapiclient.discovery
@@ -19,4 +17,4 @@ collections
 google_auth_oauthlib.flow
 google.oauth2.credentials
 google.auth.transport.requests
-Google
+pickle
