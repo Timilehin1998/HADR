@@ -9,8 +9,8 @@ matplotlib.colors
 dash_core_components
 dash_html_components
 numpy
-googleapiclient
-google
+google-api-python-client
+google-auth-httplib2 
+google-auth-oauthlib
 collections
-google_auth_oauthlib
 pickle
