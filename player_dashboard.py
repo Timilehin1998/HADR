@@ -79,13 +79,8 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes, prefix=''
 
 
 
-
-
-
-
 # Initialize the Dash app
 #app = dash.Dash(__name__)
-
 
 existing_data_url = 'https://drive.google.com/file/d/1T6iOOp5kD-hMVBmANRMGFCo3Gp2uTxqc/view?usp=sharing'
 existing_data_url='https://drive.google.com/uc?id=' + existing_data_url.split('/')[-2]
@@ -319,16 +314,25 @@ base = [
     ),
 ]
 
+
 footer = [
     dbc.Card(
         [
             html.H2("Available Funds", className="card-title"),
             html.P(id='case-value2', className=""),  
             html.Div([dcc.Input(id='output-number', type='number', value=0)], style={'display': 'none'}),
+    html.Div([
+        dbc.Progress(id='progress-bar', animated=True, striped=True, value=100),
+        html.Div(id='progress-value')],
+        style={"margin": "20px"}
+    ),
+
         ],
         body=True,
         color="light",
     ),
+
+    
 ]
 
 NAVBAR = dbc.Navbar(
@@ -409,8 +413,8 @@ BODY = dbc.Container(
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-server = app.server
 app.layout = html.Div(children=[NAVBAR,BODY])
+
 
 # Callback to handle disabling/enabling dropdowns based on selections
 @app.callback(
@@ -503,7 +507,9 @@ def clear_selections(n_clicks):
     [Output('case-value1', 'children'),
      Output('last-selected-dropdown', 'children'),
      Output('case-value2', 'children'),
-     Output('output-number', 'value')],
+     Output('output-number', 'value'),
+     Output('progress-bar', 'value'),
+     Output('progress-value', 'children')],
     [Input('cargo-acq-drop', 'value'),
      Input('maritime-acq-drop', 'value'),
      Input('cargo-st-drop', 'value'),
@@ -522,6 +528,7 @@ def clear_selections(n_clicks):
 
 def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, maritime_st_type, radio1, radio2, radio3, radio4, last_selected_dropdown):
     Budget = 600000000.0
+    initial_budget =600000000.0
     # Get the ID of the component that triggered the callback
     
     triggered_id = dash.callback_context.triggered_id
@@ -599,25 +606,36 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
         if (cargo_acq and maritime_acq):
 
             Budget = Budget - radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0]) -radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0])
+            progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
         elif (cargo_acq and maritime_st and maritime_st_type):
             if maritime_st_type == 'A':
                 Budget = Budget - radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0]) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if maritime_st_type == 'B':
                 Budget = Budget - radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0]) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if maritime_st_type == 'C':
                 Budget = Budget - radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0]) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if maritime_st_type == 'D':
                 Budget = Budget - radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0]) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if maritime_st_type == 'E':
                 Budget = Budget - radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0]) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if maritime_st_type == 'F':
                 Budget = Budget - radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0]) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
         else:
             Budget = Budget - radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0])
+            progress = ((Budget/initial_budget)*100) if (Budget/initial_budget)*100 > 0 else 0
         color = 'red' if Budget < 0 else 'green'
 
+      
+        
+
         #print("trigger_id is",dash.callback_context.triggered_id)
-        return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+        return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
     
     elif last_selected_dropdown=='maritime-acq-drop':
         
@@ -638,27 +656,35 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
         if (maritime_acq and cargo_acq):
 
             Budget = Budget - radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0]) -radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0])
+            progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
         elif (maritime_acq and cargo_st and cargo_st_type):
             if cargo_st_type == 'A':
                 Budget = Budget - radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0]) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if cargo_st_type == 'B':
                 Budget = Budget - radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0]) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if cargo_st_type == 'C':
                 Budget = Budget - radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0]) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if cargo_st_type == 'D':
                 Budget = Budget - radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0]) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if cargo_st_type == 'E':
                 Budget = Budget - radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0]) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             if cargo_st_type == 'F':
                 Budget = Budget - radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0]) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
         else:
             Budget = Budget - radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0])
+            progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
 
         color = 'red' if Budget < 0 else 'green'
 
         #print("trigger_id is",dash.callback_context.triggered_id)
-        return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+        return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
     
     
     elif last_selected_dropdown == 'cargo-st-drop' or last_selected_dropdown == 'cargo-st-type-drop':
@@ -679,25 +705,33 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (cargo_st and cargo_st_type and maritime_acq):
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0] *1.2) -radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (cargo_st and cargo_st_type and maritime_st and maritime_st_type):
                 if maritime_st_type == 'A':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'B':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'C':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'D':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'E':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'F':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
             
         
         elif cargo_st_type =='B':
@@ -717,26 +751,34 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (cargo_st and cargo_st_type and maritime_acq):
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0] *1.3) -radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (cargo_st and cargo_st_type and maritime_st and maritime_st_type):
                 if maritime_st_type == 'A':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'B':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'C':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'D':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'E':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'F':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
         
         elif cargo_st_type =='C':
             output_text = [html.H6([
@@ -755,26 +797,34 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (cargo_st and cargo_st_type and maritime_acq):
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0] *1.1) -radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (cargo_st and cargo_st_type and maritime_st and maritime_st_type):
                 if maritime_st_type == 'A':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'B':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'C':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'D':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'E':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'F':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
             
         
         elif cargo_st_type =='D':
@@ -794,26 +844,34 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (cargo_st and cargo_st_type and maritime_acq):
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0] *1.4) -radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (cargo_st and cargo_st_type and maritime_st and maritime_st_type):
                 if maritime_st_type == 'A':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'B':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'C':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'D':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'E':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'F':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
         
         elif cargo_st_type =='E':
             output_text = [html.H6([
@@ -831,26 +889,34 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             ])]
             if (cargo_st and cargo_st_type and maritime_acq):
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0] *1.5) -radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (cargo_st and cargo_st_type and maritime_st and maritime_st_type):
                 if maritime_st_type == 'A':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'B':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'C':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'D':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'E':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'F':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
 
         
         elif cargo_st_type =='F':
@@ -870,26 +936,34 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (cargo_st and cargo_st_type and maritime_acq):
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0] *1.6) -radio2*(asset_df[asset_df['Asset']==maritime_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (cargo_st and cargo_st_type and maritime_st and maritime_st_type):
                 if maritime_st_type == 'A':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'B':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'C':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'D':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'E':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if maritime_st_type == 'F':
                     Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6) -radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
 
         
     elif last_selected_dropdown == 'maritime-st-drop' or last_selected_dropdown == 'maritime-st-type-drop':    
@@ -910,26 +984,35 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (maritime_st and maritime_st_type and cargo_acq):
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0] *1.2) -radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
+
             elif (maritime_st and maritime_st_type and cargo_st and cargo_st_type):
                 if cargo_st_type == 'A':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'B':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'C':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'D':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'E':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'F':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.2)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
         
         
         elif maritime_st_type =='B':
@@ -949,26 +1032,34 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (maritime_st and maritime_st_type and cargo_acq):
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0] *1.3) -radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (maritime_st and maritime_st_type and cargo_st and cargo_st_type):
                 if cargo_st_type == 'A':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'B':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'C':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'D':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'E':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'F':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.3)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
         
         elif maritime_st_type =='C':
             output_text = [html.H6([
@@ -987,26 +1078,34 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (maritime_st and maritime_st_type and cargo_acq):
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0] *1.1) -radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (maritime_st and maritime_st_type and cargo_st and cargo_st_type):
                 if cargo_st_type == 'A':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'B':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'C':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'D':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'E':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'F':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.1)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
         
         elif maritime_st_type =='D':
             output_text = [html.H6([
@@ -1025,26 +1124,34 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (maritime_st and maritime_st_type and cargo_acq):
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0] *1.4) -radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (maritime_st and maritime_st_type and cargo_st and cargo_st_type):
                 if cargo_st_type == 'A':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'B':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'C':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'D':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'E':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'F':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.4)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
         
         elif maritime_st_type =='E':
             output_text = [html.H6([
@@ -1063,26 +1170,34 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (maritime_st and maritime_st_type and cargo_acq):
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0] *1.5) -radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (maritime_st and maritime_st_type and cargo_st and cargo_st_type):
                 if cargo_st_type == 'A':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'B':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3)
-                if cargo_st_type == 'C':
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
+                if cargo_st_type == 'C': 
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'D':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'E':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'F':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.5)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
         
         elif maritime_st_type =='F':
             output_text = [html.H6([
@@ -1101,31 +1216,40 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
             if (maritime_st and maritime_st_type and cargo_acq):
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0] *1.6) -radio1*(asset_df[asset_df['Asset']==cargo_acq]['Acquisition_cost'].values[0])
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             elif (maritime_st and maritime_st_type and cargo_st and cargo_st_type):
                 if cargo_st_type == 'A':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.2)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'B':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.3)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'C':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.1)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'D':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.4)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'E':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.5)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
                 if cargo_st_type == 'F':
                     Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6) -radio3*(asset_df[asset_df['Asset']==cargo_st]['Acquisition_cost'].values[0]*1.6)
+                    progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
             else:
                 Budget = Budget - radio4*(asset_df[asset_df['Asset']==maritime_st]['Acquisition_cost'].values[0]*1.6)
+                progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
     else:
             color = 'red' if Budget < 0 else 'green'
+            progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
 
-            return html.P("No selection."), last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget
+            return html.P("No selection."), last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
     
 
 
