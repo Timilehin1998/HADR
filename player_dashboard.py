@@ -86,8 +86,15 @@ existing_data_url = 'https://drive.google.com/file/d/1T6iOOp5kD-hMVBmANRMGFCo3Gp
 existing_data_url='https://drive.google.com/uc?id=' + existing_data_url.split('/')[-2]
 existing_data = pd.read_csv(existing_data_url)
 
+UH_60_url = 'https://github.com/Timilehin1998/HADR/blob/main/images/UH60_SS.png?raw=true'
+MRH_90_url= 'https://github.com/Timilehin1998/HADR/blob/main/images/MRH_90.png?raw=true'
+V_22_url= 'https://github.com/Timilehin1998/HADR/blob/main/images/V_22.png?raw=true'
+V_280_url= 'https://github.com/Timilehin1998/HADR/blob/main/images/V_280.png?raw=true'
 
-asset_df_url = 'https://drive.google.com/file/d/1riT7LUDNIsQP6zS1l4j96-mpGTK_yK2N/view?usp=drive_link'
+
+
+
+asset_df_url = 'https://drive.google.com/file/d/1yKQV8MWpfmu__nRBZFX7ORUi0rNUuomX/view?usp=sharing'
 asset_df_url='https://drive.google.com/uc?id=' + asset_df_url.split('/')[-2]
 asset_df = pd.read_csv(asset_df_url)
 
@@ -114,8 +121,7 @@ background_image_path = "Python_Dashboard\\Pictures\\UH60rspic.png"  # Adjust th
 
 
 # Combine the current directory with the image path
-background_image_url = "C:/Users/toderinde3/OneDrive - Georgia Institute of Technology/HADR_Project/Year7/Python_Dashboard/Pictures/UH60rspic.png"
-print(f"Full Path to Image: {background_image_url}")
+#background_image_url = "C:/Users/toderinde3/OneDrive - Georgia Institute of Technology/HADR_Project/Year7/Python_Dashboard/Pictures/UH60rspic.png"
 def Header(name, app):
     title = html.H2(name, style={"margin-top": 5})
     logo = html.Img(
@@ -184,6 +190,63 @@ LEFT_COLUMN = dbc.Jumbotron(
             value= 2,
            labelStyle={'display': 'inline-block', 'margin-right': '30px'}  # inline display with spacing
               
+        ),
+
+
+            
+
+        
+    ]
+)
+
+
+LEFT_COLUMN_WEIGHT = dbc.Jumbotron(
+    [
+        html.H4(children="Challenging Vignette 1", className="display-5"),
+        html.Hr(className="my-2"),
+        html.H5(children="Select Criteria Weights", style={"marginTop": 30}, className="display-7"),
+        #html.Hr(className="my-2"),
+        html.Div(
+    [
+        dbc.Label("Population in neeed serviced", html_for="slider"),
+        dcc.Slider(id="slider1", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+    
+       
+        html.Div(
+    [
+        dbc.Label("Total packages delivered", html_for="slider"),
+        dcc.Slider(id="slider2", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+
+
+        html.Div(
+    [
+        dbc.Label("Days to 1st package delivered", html_for="slider"),
+        dcc.Slider(id="slider3", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+
+        html.Div(
+    [
+        dbc.Label("Population aided per flown in cargo flight time", html_for="slider"),
+        dcc.Slider(id="slider4", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+
+html.H5(children="Select Scenario Weight", style={"marginTop": 40}, className="display-7"),
+        #html.Hr(className="my-2"),
+        html.Div(
+    [
+        #dbc.Label("Population in neeed serviced", html_for="slider"),
+        dcc.Slider(id="slider5", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
         ),
 
 
@@ -299,20 +362,147 @@ RIGHT_COLUMN = dbc.Jumbotron(
     ]
 )
 
+MIDDLE_COLUMN_WEIGHT = dbc.Jumbotron(
+    [
+        html.H4(children="Challenging Vignette 2", className="display-5"),
+        html.Hr(className="my-2"),
+        html.H5(children="Select Criteria Weights", style={"marginTop": 30}, className="display-7"),
+        #html.Hr(className="my-2"),
+        
+
+        html.Div(
+    [
+        dbc.Label("Population in neeed serviced", html_for="slider"),
+        dcc.Slider(id="slider6", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+    
+       
+        html.Div(
+    [
+        dbc.Label("Total packages delivered", html_for="slider"),
+        dcc.Slider(id="slider7", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
 
 
-base = [
-    dbc.Card(
-        [
-            html.H2("Assets Specifications", className="card-title"),
-            html.P(id='case-value1', className=""),
-            html.Div(id='last-selected-dropdown', style={'display': 'none'}),
+        html.Div(
+    [
+        dbc.Label("Days to 1st package delivered", html_for="slider"),
+        dcc.Slider(id="slider8", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+
+        html.Div(
+    [
+        dbc.Label("Population aided per flown in cargo flight time", html_for="slider"),
+        dcc.Slider(id="slider9", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+
+html.H5(children="Select Scenario Weight", style={"marginTop": 40}, className="display-7"),
+        #html.Hr(className="my-2"),
+        html.Div(
+    [
+        #dbc.Label("Population in neeed serviced", html_for="slider"),
+        dcc.Slider(id="slider10", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+        ),
+
+
             
-        ],
-        body=True,
-        color="light",
-    ),
+
+        
+    ]
+)
+
+RIGHT_COLUMN_WEIGHT = dbc.Jumbotron(
+    [
+        html.H4(children="Challenging Vignette 3", className="display-5"),
+        html.Hr(className="my-2"),
+        html.H5(children="Select Criteria Weights", style={"marginTop": 30}, className="display-7"),
+        #html.Hr(className="my-2"),
+        
+
+        html.Div(
+    [
+        dbc.Label("Population in neeed serviced", html_for="slider"),
+        dcc.Slider(id="slider11", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+    
+       
+        html.Div(
+    [
+        dbc.Label("Total packages delivered", html_for="slider"),
+        dcc.Slider(id="slider12", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+
+
+        html.Div(
+    [
+        dbc.Label("Days to 1st package delivered", html_for="slider"),
+        dcc.Slider(id="slider13", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+
+        html.Div(
+    [
+        dbc.Label("Population aided per flown in cargo flight time", html_for="slider"),
+        dcc.Slider(id="slider14", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+
+html.H5(children="Select Scenario Weight", style={"marginTop": 40}, className="display-7"),
+        #html.Hr(className="my-2"),
+        html.Div(
+    [
+        #dbc.Label("Population in neeed serviced", html_for="slider"),
+        dcc.Slider(id="slider15", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+        ),
+
+
+            
+
+        
+    ]
+)
+
+
+base = [dbc.Card(
+    [
+        dbc.CardImg(
+            id='card-image',
+            top=True,
+        ),
+            dbc.CardBody(
+                [
+                    html.H4("Assets Specifications", className="card-title"),
+                    html.P(
+                        id='case-value1',
+                        className="card-text",
+                    ),
+                    html.Div(id='last-selected-dropdown', style={'display': 'none'}),
+                ],
+            ),
+        
+    ],
+    style={"width": "40rem"},
+),
 ]
+
+
+
 
 
 footer = [
@@ -335,6 +525,13 @@ footer = [
     
 ]
 
+top = html.Div([
+    html.H5('Name', style={'display': 'inline-block','width': '4%', 'margin-left': '200px', 'margin-top': '20px'}),
+    
+    # Input text box for player names
+    dcc.Input(id='player-input', type='text', placeholder='Enter player name...', style={'width': '33%', 'display': 'inline-block'}),
+])
+
 NAVBAR = dbc.Navbar(
     children=[
         html.A(
@@ -356,6 +553,7 @@ NAVBAR = dbc.Navbar(
     dark=True,
     sticky="top",
 )
+
 BODY = dbc.Container(
     [
         dbc.Row(
@@ -375,13 +573,13 @@ BODY = dbc.Container(
         html.Hr(),
         dbc.Row([
             dbc.Col(
-                html.Button("Populate Case", id='populate-button', n_clicks=0),
+                dbc.Button("Populate Case", id='populate-button', n_clicks=0, color="primary", className="me-1"),
                 md=4,
                 style={'text-align': 'right'},align="right"
                 
             ),
             dbc.Col(
-                html.Button('Clear Selections', id='clear-button', n_clicks=0),
+                dbc.Button('Clear Selections', id='clear-button', n_clicks=0, color="primary", className="me-1"),
                 md=4,
                 style={'text-align': 'right'},align="right"
             ),
@@ -409,12 +607,67 @@ BODY = dbc.Container(
     className="mt-12",
 )
 
+BODY_WEIGHT = dbc.Container(
+    [
+        dbc.Row(
+            [
+                dbc.Col(LEFT_COLUMN_WEIGHT, md=4, align="left"),
+                dbc.Col(MIDDLE_COLUMN_WEIGHT, md=4, align="center"),
+                dbc.Col(RIGHT_COLUMN_WEIGHT, md=4, align="right"),
+
+            ],
+            style={"marginTop": 30},
+        ),
+            dbc.Col(
+                dbc.Button("Submit", id='submit-button', n_clicks=0, color="primary", className="me-1"),
+                md=12,
+                style={'text-align': 'right'},align="right"
+                
+            ),
+
+        dbc.Row([
+            dbc.Col(
+                dash_table.DataTable(id='data-table2',
+                                     selected_rows=[],
+        style_table={'display': 'none'}),
+                md=12,
+                
+            )
+        ]),
+
+    ])
+alerts = html.Div(
+    [html.Div(id='output-container4'),
+        dbc.Alert("Ensure criteria weights add up to 100%", id="alert1", color="danger", dismissable=True,is_open=False),
+        dbc.Alert("Ensure scenario weights add up to 100%", id="alert2", color="danger", dismissable=True,is_open=False),
+        dbc.Alert("Selection submitted successfully",id="alert3", color="success", dismissable=True,is_open=False),
+    ]
+)
 
 
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
 server = app.server
-app.layout = html.Div(children=[NAVBAR,BODY])
+tab1_layout = html.Div(children=[BODY])
+tab2_layout = html.Div(children = [BODY_WEIGHT, alerts])
+
+app.layout = html.Div(children = [NAVBAR,
+    dcc.Tabs(id='tabs-example', value='tab-1', children=[
+        dcc.Tab(label='Fleet Selection', value='tab-1'),
+        dcc.Tab(label='Weight Selection', value='tab-2'),
+    ]), top,
+    html.Div(id='tabs-content')
+])
+
+# Define callback to render content based on selected tab
+@app.callback(Output('tabs-content', 'children'),
+              [Input('tabs-example', 'value')])
+def render_content(tab):
+    if tab == 'tab-1':
+        return tab1_layout
+    elif tab == 'tab-2':
+        return tab2_layout
 
 
 # Callback to handle disabling/enabling dropdowns based on selections
@@ -510,7 +763,8 @@ def clear_selections(n_clicks):
      Output('case-value2', 'children'),
      Output('output-number', 'value'),
      Output('progress-bar', 'value'),
-     Output('progress-value', 'children')],
+     Output('progress-value', 'children'),
+     Output('card-image', 'src'),],
     [Input('cargo-acq-drop', 'value'),
      Input('maritime-acq-drop', 'value'),
      Input('cargo-st-drop', 'value'),
@@ -567,20 +821,19 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
     my_list.append(last_selected_dropdown)
     for item in my_list:
-        if item is not None:
+        if item is not None and triggered_id is not None:
             last_selected_dropdown = item
 
 
-    #print("trigger_id is",triggered_id)
-    #print("my list is ",my_list)
+    print("trigger_id is",triggered_id)
+    print("my list is ",my_list)
     #print("last_selected_drop is",last_selected_dropdown)
-    
+    print("last_selected_drop is",last_selected_dropdown)
 
 
     if last_selected_dropdown=='cargo-acq-drop':
 
         output_text = html.Div(style={
-        'background-image': f'url("{background_image_url}")',
         'background-size': 'cover',
         'background-position': 'center',
         'padding': '20px',  # Adjust padding as needed
@@ -636,7 +889,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
         
 
         #print("trigger_id is",dash.callback_context.triggered_id)
-        return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+        return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==cargo_acq]['URL'].values[0]
     
     elif last_selected_dropdown=='maritime-acq-drop':
         
@@ -685,7 +938,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
         color = 'red' if Budget < 0 else 'green'
 
         #print("trigger_id is",dash.callback_context.triggered_id)
-        return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+        return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==maritime_acq]['URL'].values[0]
     
     
     elif last_selected_dropdown == 'cargo-st-drop' or last_selected_dropdown == 'cargo-st-type-drop':
@@ -732,7 +985,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==cargo_st]['URL'].values[0]
             
         
         elif cargo_st_type =='B':
@@ -779,7 +1032,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%' , asset_df[asset_df['Asset']==cargo_st]['URL'].values[0]
         
         elif cargo_st_type =='C':
             output_text = [html.H6([
@@ -825,7 +1078,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==cargo_st]['URL'].values[0]
             
         
         elif cargo_st_type =='D':
@@ -872,7 +1125,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==cargo_st]['URL'].values[0]
         
         elif cargo_st_type =='E':
             output_text = [html.H6([
@@ -917,7 +1170,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==cargo_st]['URL'].values[0]
 
         
         elif cargo_st_type =='F':
@@ -964,7 +1217,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==cargo_st]['URL'].values[0]
 
         
     elif last_selected_dropdown == 'maritime-st-drop' or last_selected_dropdown == 'maritime-st-type-drop':    
@@ -1013,7 +1266,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==maritime_st]['URL'].values[0]
         
         
         elif maritime_st_type =='B':
@@ -1060,7 +1313,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==maritime_st]['URL'].values[0]
         
         elif maritime_st_type =='C':
             output_text = [html.H6([
@@ -1106,7 +1359,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==maritime_st]['URL'].values[0]
         
         elif maritime_st_type =='D':
             output_text = [html.H6([
@@ -1152,7 +1405,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==maritime_st]['URL'].values[0]
         
         elif maritime_st_type =='E':
             output_text = [html.H6([
@@ -1198,7 +1451,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==maritime_st]['URL'].values[0]
         
         elif maritime_st_type =='F':
             output_text = [html.H6([
@@ -1244,13 +1497,13 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
             color = 'red' if Budget < 0 else 'green'
 
             #print("trigger_id is",dash.callback_context.triggered_id)
-            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return output_text, last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', asset_df[asset_df['Asset']==maritime_st]['URL'].values[0]
     else:
             color = 'red' if Budget < 0 else 'green'
             progress = (Budget/initial_budget)*100 if (Budget/initial_budget)*100 > 0 else 0
 
 
-            return html.P("No selection."), last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%'
+            return html.P("No selection."), last_selected_dropdown, html.H6(f"{convert_to_millions(Budget)}", style={'color': color}), Budget, progress, f'{round(progress)}%', None
     
 
 
@@ -1259,7 +1512,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
 
 @app.callback(
     Output('data-table', 'data'),
-    [Input('populate-button', 'n_clicks'),Input('output-number', 'value')],
+    [Input('populate-button', 'n_clicks'),Input('output-number', 'value'), Input('player-input', 'value')],
     [State('cargo-acq-drop', 'value'),
     State('maritime-acq-drop', 'value'),
     State('cargo-st-drop', 'value'),
@@ -1272,7 +1525,7 @@ def update_graph(cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, 
     State('radio-button4', 'value')]
 )
 
-def update_data_table(n_clicks, input_value, cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, maritime_st_type,radio1,radio2,radio3,radio4):
+def update_data_table(n_clicks, input_value, player_name, cargo_acq, maritime_acq, cargo_st, cargo_st_type, maritime_st, maritime_st_type,radio1,radio2,radio3,radio4):
     # Create a DataFrame with the selected values
     global existing_data
     #existing_data = pd.read_csv('C:\\Users\\toderinde3\\Documents\\HADR_Project\\Year7\\DOE\\Baseline.csv')
@@ -1313,31 +1566,38 @@ def update_data_table(n_clicks, input_value, cargo_acq, maritime_acq, cargo_st, 
             new_data = []
         
         if input_value>=0 and len(new_data)>0:
-            
-            #try:
-
-         
-        
-        
 
             # Authenticate with Google Drive API
             service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
             csv_content = new_data.to_csv(index=False)
-            
-            # Upload CSV to Google Drive
-            file_metadata = {
-                'name': 'player_1',
+
+            if player_name:
+                file_metadata = {
+                'name': player_name,
                 'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
                 'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             }
         
-            media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
+                media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
             
-            file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+                file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+
+                return new_data.to_dict('records')
+        
            
+            else:
+                file_metadata = {
+                'name': 'unknown_player',
+                'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
+                'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+        
+                media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
             
-            # Return the DataFrame records if the upload is successful
-            return new_data.to_dict('records')
+                file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+
+                return new_data.to_dict('records')
+        
             #except Exception as e:
                 #return f'Error: {str(e)}'
             #new_data.to_csv('C:\\Users\\toderinde3\\OneDrive - Georgia Institute of Technology\\HADR_Project\\Year7\\DOE\\player_1_cases.csv', index=False)
@@ -1345,14 +1605,97 @@ def update_data_table(n_clicks, input_value, cargo_acq, maritime_acq, cargo_st, 
         else:
         # If the button is not clicked yet, return an empty data dict
             return []
+        
+@app.callback(
+    [Output('data-table2', 'data'),
+     Output('alert1','is_open'),
+     Output('alert2','is_open'),
+     Output('alert3','is_open')],
+    [Input('submit-button', 'n_clicks'), Input('player-input', 'value')],
+    [State('slider1', 'value'),
+    State('slider2', 'value'),
+    State('slider3', 'value'),
+    State('slider4', 'value'),
+    State('slider5', 'value'),
+    State('slider6', 'value'),
+    State('slider7', 'value'),
+    State('slider8', 'value'),
+    State('slider9', 'value'),
+    State('slider10', 'value'),
+    State('slider11', 'value'),
+    State('slider12', 'value'),
+    State('slider13', 'value'),
+    State('slider14', 'value'),
+    State('slider15', 'value'),
+]
+)
+def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4, slider5, slider6,slider7, slider8, slider9, slider10, slider11, slider12, slider13, slider14, slider15):
+    ctx = dash.callback_context
+    if ctx.triggered_id == 'submit-button' and n_clicks is not None: 
+        if (slider1+slider2+slider3+slider4 == 100) and (slider6+slider7+slider8+slider9 == 100) and (slider11+slider12+slider13+slider14 == 100) and (slider5+slider10+slider15 == 100):
+            data = {'Population_serviced_scen1':[slider1/100],
+                    'Total_packages_del_scen1':[slider2/100],
+                    'Days_to_1st_pack_scen1': [slider3/100],
+                    'Population_aided_per_flown_in_scen1':[slider4/100],
+                    'Population_serviced_scen2':[slider6/100],
+                    'Total_packages_del_scen2':[slider7/100],
+                    'Days_to_1st_pack_scen2': [slider8/100],
+                    'Population_aided_per_flown_in_scen2':[slider9/100],
+                    'Population_serviced_scen3':[slider11/100],
+                    'Total_packages_del_scen3':[slider12/100],
+                    'Days_to_1st_pack_scen3': [slider13/100],
+                    'Population_aided_per_flown_in_scen3':[slider14/100],
+                    'Scenario1_weight':[slider5/100],
+                    'Scenario2_weight':[slider10/100],
+                    'Scenario3_weight': [slider15/100],
+                
+                }
+            new_data = pd.DataFrame(data)
+            # Authenticate with Google Drive API
+            service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+            csv_content = new_data.to_csv(index=False)
+
+            if player_name:
+                file_metadata = {
+                'name': f'{player_name} weights',
+                'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
+                'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+        
+                media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
+            
+                file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+
+                return new_data.to_dict('records'), False, False, True 
+        
+           
+            else:
+                file_metadata = {
+                'name': 'unknown_player weights',
+                'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
+                'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+        
+                media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
+            
+                file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+
+                return new_data.to_dict('records'),False, False, True
+        
+            #except Exception as e:
+                #return f'Error: {str(e)}'
+            #new_data.to_csv('C:\\Users\\toderinde3\\OneDrive - Georgia Institute of Technology\\HADR_Project\\Year7\\DOE\\player_1_cases.csv', index=False)
+            #return new_data.to_dict('records')
+        elif ((slider1+slider2+slider3+slider4 != 100) or (slider6+slider7+slider8+slider9 != 100) or (slider11+slider12+slider13+slider14 != 100)) and (slider5+slider10+slider15 == 100):
+            return [], True,False, False
+        elif (slider1+slider2+slider3+slider4 == 100) and (slider6+slider7+slider8+slider9 == 100) and (slider11+slider12+slider13+slider14 == 100) and (slider5+slider10+slider15 != 100):
+            return [], False,True, False
+        else:
+            return [], True,True, False
+    else:
+        # If the button is not clicked yet, return an empty data dict
+        return [], False,False, False    
     
-
-
-
-
-
-
-
 if __name__ == "__main__":
     app.run_server(debug=True)
 
