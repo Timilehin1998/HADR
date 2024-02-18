@@ -239,6 +239,13 @@ LEFT_COLUMN_WEIGHT = dbc.Jumbotron(
     ],
     className="mb-3",
 ),
+html.Div(
+    [
+        dbc.Label("Acquisition cost", html_for="slider"),
+        dcc.Slider(id="slider16", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
 
 html.H5(children="Select Scenario Weight", style={"marginTop": 40}, className="display-7"),
         #html.Hr(className="my-2"),
@@ -404,6 +411,16 @@ MIDDLE_COLUMN_WEIGHT = dbc.Jumbotron(
     className="mb-3",
 ),
 
+html.Div(
+    [
+        dbc.Label("Acquisition cost", html_for="slider"),
+        dcc.Slider(id="slider17", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+
+
+
 html.H5(children="Select Scenario Weight", style={"marginTop": 40}, className="display-7"),
         #html.Hr(className="my-2"),
         html.Div(
@@ -458,6 +475,13 @@ RIGHT_COLUMN_WEIGHT = dbc.Jumbotron(
     [
         dbc.Label("Population aided per flown in cargo flight time", html_for="slider"),
         dcc.Slider(id="slider14", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+html.Div(
+    [
+        dbc.Label("Acquisition cost", html_for="slider"),
+        dcc.Slider(id="slider18", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
     className="mb-3",
 ),
@@ -1627,24 +1651,30 @@ def update_data_table(n_clicks, input_value, player_name, cargo_acq, maritime_ac
     State('slider13', 'value'),
     State('slider14', 'value'),
     State('slider15', 'value'),
+    State('slider16', 'value'),
+    State('slider17', 'value'),
+    State('slider18', 'value'),
 ]
 )
-def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4, slider5, slider6,slider7, slider8, slider9, slider10, slider11, slider12, slider13, slider14, slider15):
+def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4, slider5, slider6,slider7, slider8, slider9, slider10, slider11, slider12, slider13, slider14, slider15,slider16, slider17, slider18):
     ctx = dash.callback_context
     if ctx.triggered_id == 'submit-button' and n_clicks is not None: 
-        if (slider1+slider2+slider3+slider4 == 100) and (slider6+slider7+slider8+slider9 == 100) and (slider11+slider12+slider13+slider14 == 100) and (slider5+slider10+slider15 == 100):
+        if (slider1+slider2+slider3+slider4+slider16 == 100) and (slider6+slider7+slider8+slider9+slider17 == 100) and (slider11+slider12+slider13+slider14+slider18 == 100) and (slider5+slider10+slider15 == 100):
             data = {'Population_serviced_scen1':[slider1/100],
                     'Total_packages_del_scen1':[slider2/100],
                     'Days_to_1st_pack_scen1': [slider3/100],
                     'Population_aided_per_flown_in_scen1':[slider4/100],
+                    'Acquisition_cost_scen1':[slider16/100],
                     'Population_serviced_scen2':[slider6/100],
                     'Total_packages_del_scen2':[slider7/100],
                     'Days_to_1st_pack_scen2': [slider8/100],
                     'Population_aided_per_flown_in_scen2':[slider9/100],
+                    'Acquisition_cost_scen2':[slider17/100],
                     'Population_serviced_scen3':[slider11/100],
                     'Total_packages_del_scen3':[slider12/100],
                     'Days_to_1st_pack_scen3': [slider13/100],
                     'Population_aided_per_flown_in_scen3':[slider14/100],
+                    'Acquisition_cost_scen3':[slider18/100],
                     'Scenario1_weight':[slider5/100],
                     'Scenario2_weight':[slider10/100],
                     'Scenario3_weight': [slider15/100],
@@ -1686,9 +1716,9 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
                 #return f'Error: {str(e)}'
             #new_data.to_csv('C:\\Users\\toderinde3\\OneDrive - Georgia Institute of Technology\\HADR_Project\\Year7\\DOE\\player_1_cases.csv', index=False)
             #return new_data.to_dict('records')
-        elif ((slider1+slider2+slider3+slider4 != 100) or (slider6+slider7+slider8+slider9 != 100) or (slider11+slider12+slider13+slider14 != 100)) and (slider5+slider10+slider15 == 100):
+        elif ((slider1+slider2+slider3+slider4+slider16 != 100) or (slider6+slider7+slider8+slider9+slider17 != 100) or (slider11+slider12+slider13+slider14+slider18 != 100)) and (slider5+slider10+slider15 == 100):
             return [], True,False, False
-        elif (slider1+slider2+slider3+slider4 == 100) and (slider6+slider7+slider8+slider9 == 100) and (slider11+slider12+slider13+slider14 == 100) and (slider5+slider10+slider15 != 100):
+        elif (slider1+slider2+slider3+slider4+slider16 == 100) and (slider6+slider7+slider8+slider9+slider17 == 100) and (slider11+slider12+slider13+slider14+slider18 == 100) and (slider5+slider10+slider15 != 100):
             return [], False,True, False
         else:
             return [], True,True, False
