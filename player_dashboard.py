@@ -94,7 +94,7 @@ V_280_url= 'https://github.com/Timilehin1998/HADR/blob/main/images/V_280.png?raw
 
 
 
-asset_df_url = 'https://drive.google.com/file/d/1yKQV8MWpfmu__nRBZFX7ORUi0rNUuomX/view?usp=sharing'
+asset_df_url = 'https://drive.google.com/file/d/1gEatu8mc2OKygOKs_hMRWdE6yFrK1RaT/view?usp=drive_link'
 asset_df_url='https://drive.google.com/uc?id=' + asset_df_url.split('/')[-2]
 asset_df = pd.read_csv(asset_df_url)
 
