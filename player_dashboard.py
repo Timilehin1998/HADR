@@ -200,7 +200,7 @@ LEFT_COLUMN = dbc.Jumbotron(
 )
 
 
-LEFT_COLUMN_WEIGHT = dbc.Jumbotron(
+LEFT_COLUMN_WEIGHT = html.Div(
     [
         html.H4(children="Challenging Vignette 1", className="display-5"),
         html.Hr(className="my-2"),
@@ -208,7 +208,7 @@ LEFT_COLUMN_WEIGHT = dbc.Jumbotron(
         #html.Hr(className="my-2"),
         html.Div(
     [
-        dbc.Label("Population in neeed serviced", html_for="slider"),
+        dbc.Label("Population in need serviced", html_for="slider"),
         dcc.Slider(id="slider1", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
     className="mb-3",
@@ -239,29 +239,37 @@ LEFT_COLUMN_WEIGHT = dbc.Jumbotron(
     ],
     className="mb-3",
 ),
-html.Div(
-    [
-        dbc.Label("Acquisition cost", html_for="slider"),
-        dcc.Slider(id="slider16", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+       
     ],
-    className="mb-3",
-),
+    style = { 
+    'border-radius': '5px',
+    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    'margin': '10px',
+    'padding': '10px',
+    'background-color': 'white',
+}
+)
 
-html.H5(children="Select Scenario Weight", style={"marginTop": 40}, className="display-7"),
+LEFT_COLUMN_VIGNETTE = html.Div(
+    [
+        html.H5(children="Select Vignette 1 Weights", style={"marginTop": 10}, className="display-7"),
+        html.Hr(className="my-2"),
         #html.Hr(className="my-2"),
         html.Div(
     [
         #dbc.Label("Population in neeed serviced", html_for="slider"),
         dcc.Slider(id="slider5", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
-        ),
-
-
-            
-
-        
-    ]
-)
+        ),       
+    ],
+    style = { 
+    'border-radius': '5px',
+    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    'margin': '10px',
+    'padding': '10px',
+    'background-color': 'white',
+}
+    )
 
 
 
@@ -366,10 +374,16 @@ RIGHT_COLUMN = dbc.Jumbotron(
                 labelStyle={'display': 'inline-block', 'margin-right': '30px'}  # inline display with spacing
                 
             ), 
-    ]
+    ], style = { 
+    'border-radius': '5px',
+    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    'margin': '10px',
+    'padding': '10px',
+    'background-color': 'white',
+}
 )
 
-MIDDLE_COLUMN_WEIGHT = dbc.Jumbotron(
+MIDDLE_COLUMN_WEIGHT = html.Div(
     [
         html.H4(children="Challenging Vignette 2", className="display-5"),
         html.Hr(className="my-2"),
@@ -379,7 +393,7 @@ MIDDLE_COLUMN_WEIGHT = dbc.Jumbotron(
 
         html.Div(
     [
-        dbc.Label("Population in neeed serviced", html_for="slider"),
+        dbc.Label("Population in need serviced", html_for="slider"),
         dcc.Slider(id="slider6", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
     className="mb-3",
@@ -411,33 +425,40 @@ MIDDLE_COLUMN_WEIGHT = dbc.Jumbotron(
     className="mb-3",
 ),
 
-html.Div(
+        
+    ], style = { 
+    'border-radius': '5px',
+    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    'margin': '10px',
+    'padding': '10px',
+    'background-color': 'white',
+}
+)
+
+MIDDLE_COLUMN_VIGNETTE = html.Div(
     [
-        dbc.Label("Acquisition cost", html_for="slider"),
-        dcc.Slider(id="slider17", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
-    ],
-    className="mb-3",
-),
-
-
-
-html.H5(children="Select Scenario Weight", style={"marginTop": 40}, className="display-7"),
+        html.H5(children="Select Vignette 2 Weights", style={"marginTop": 10}, className="display-7"),
+        html.Hr(className="my-2"),
         #html.Hr(className="my-2"),
         html.Div(
     [
         #dbc.Label("Population in neeed serviced", html_for="slider"),
         dcc.Slider(id="slider10", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
-        ),
+        ),       
+    ],
+    style = { 
+    'border-radius': '5px',
+    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    'margin': '10px',
+    'padding': '10px',
+    'background-color': 'white',
+}
+    )
 
 
-            
 
-        
-    ]
-)
-
-RIGHT_COLUMN_WEIGHT = dbc.Jumbotron(
+RIGHT_COLUMN_WEIGHT = html.Div(
     [
         html.H4(children="Challenging Vignette 3", className="display-5"),
         html.Hr(className="my-2"),
@@ -447,7 +468,7 @@ RIGHT_COLUMN_WEIGHT = dbc.Jumbotron(
 
         html.Div(
     [
-        dbc.Label("Population in neeed serviced", html_for="slider"),
+        dbc.Label("Population in need serviced", html_for="slider"),
         dcc.Slider(id="slider11", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
     className="mb-3",
@@ -477,30 +498,36 @@ RIGHT_COLUMN_WEIGHT = dbc.Jumbotron(
         dcc.Slider(id="slider14", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
     className="mb-3",
-),
-html.Div(
-    [
-        dbc.Label("Acquisition cost", html_for="slider"),
-        dcc.Slider(id="slider18", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
-    ],
-    className="mb-3",
-),
+),        
+    ], style = { 
+    'border-radius': '5px',
+    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    'margin': '10px',
+    'padding': '10px',
+    'background-color': 'white',
+}
+)
 
-html.H5(children="Select Scenario Weight", style={"marginTop": 40}, className="display-7"),
+RIGHT_COLUMN_VIGNETTE = html.Div(
+    [
+        html.H5(children="Select Vignette 3 Weights", style={"marginTop": 10}, className="display-7"),
+        html.Hr(className="my-2"),
         #html.Hr(className="my-2"),
         html.Div(
     [
         #dbc.Label("Population in neeed serviced", html_for="slider"),
         dcc.Slider(id="slider15", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
-        ),
-
-
-            
-
-        
-    ]
-)
+        ),       
+    ],
+    style = { 
+    'border-radius': '5px',
+    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    'margin': '10px',
+    'padding': '10px',
+    'background-color': 'white',
+}
+    )
 
 
 base = [dbc.Card(
@@ -631,7 +658,35 @@ BODY = dbc.Container(
     className="mt-12",
 )
 
-BODY_WEIGHT = dbc.Container(
+bottom = html.Div(
+    [
+        
+        html.Div(
+    [
+        dbc.Label("Acquisition cost", html_for="slider"),
+        dcc.Slider(id="slider16", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+    
+       
+        html.Div(
+    [
+        dbc.Label("Risk", html_for="slider"),
+        dcc.Slider(id="slider17", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+    ],
+    className="mb-3",
+),
+    ], style = { 
+    'border-radius': '5px',
+    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    'margin': '10px',
+    'padding': '10px',
+    'background-color': 'white',
+}
+    )
+
+BODY_WEIGHT = html.Div(
     [
         dbc.Row(
             [
@@ -642,6 +697,24 @@ BODY_WEIGHT = dbc.Container(
             ],
             style={"marginTop": 30},
         ),
+
+        dbc.Row(
+            [
+                dbc.Col(bottom, md=8, align="left"),
+
+            ],
+            style={"marginTop": 5},
+        ),
+        dbc.Row(
+            [
+                dbc.Col(LEFT_COLUMN_VIGNETTE, md=4, align="left"),
+                dbc.Col(MIDDLE_COLUMN_VIGNETTE, md=4, align="center"),
+                dbc.Col(RIGHT_COLUMN_VIGNETTE, md=4, align="right"),
+
+            ],
+            style={"marginTop": 30},
+        ),
+        
             dbc.Col(
                 dbc.Button("Submit", id='submit-button', n_clicks=0, color="primary", className="me-1"),
                 md=12,
@@ -660,6 +733,8 @@ BODY_WEIGHT = dbc.Container(
         ]),
 
     ])
+
+
 alerts = html.Div(
     [html.Div(id='output-container4'),
         dbc.Alert("Ensure criteria weights add up to 100%", id="alert1", color="danger", dismissable=True,is_open=False),
@@ -677,8 +752,8 @@ tab1_layout = html.Div(children=[BODY])
 tab2_layout = html.Div(children = [BODY_WEIGHT, alerts])
 
 app.layout = html.Div(children = [NAVBAR,
-    dcc.Tabs(id='tabs-example', value='tab-1', children=[
-        dcc.Tab(label='Fleet Selection', value='tab-1'),
+    dcc.Tabs(id='tabs-example', value='tab-2', children=[
+        #dcc.Tab(label='Fleet Selection', value='tab-1'),
         dcc.Tab(label='Weight Selection', value='tab-2'),
     ]), top,
     html.Div(id='tabs-content')
@@ -1653,32 +1728,33 @@ def update_data_table(n_clicks, input_value, player_name, cargo_acq, maritime_ac
     State('slider15', 'value'),
     State('slider16', 'value'),
     State('slider17', 'value'),
-    State('slider18', 'value'),
 ]
 )
-def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4, slider5, slider6,slider7, slider8, slider9, slider10, slider11, slider12, slider13, slider14, slider15,slider16, slider17, slider18):
+def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4, slider5, slider6,slider7, slider8, slider9, slider10, slider11, slider12, slider13, slider14, slider15,slider16, slider17):
     ctx = dash.callback_context
     if ctx.triggered_id == 'submit-button' and n_clicks is not None: 
-        if (slider1+slider2+slider3+slider4+slider16 == 100) and (slider6+slider7+slider8+slider9+slider17 == 100) and (slider11+slider12+slider13+slider14+slider18 == 100) and (slider5+slider10+slider15 == 100):
+        if (slider1+slider2+slider3+slider4+slider16+slider17 == 100) and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
             data = {'Population_serviced_scen1':[slider1/100],
                     'Total_packages_del_scen1':[slider2/100],
                     'Days_to_1st_pack_scen1': [slider3/100],
                     'Population_aided_per_flown_in_scen1':[slider4/100],
                     'Acquisition_cost_scen1':[slider16/100],
+                    'Risk_scen1':[slider17/100],
                     'Population_serviced_scen2':[slider6/100],
                     'Total_packages_del_scen2':[slider7/100],
                     'Days_to_1st_pack_scen2': [slider8/100],
                     'Population_aided_per_flown_in_scen2':[slider9/100],
-                    'Acquisition_cost_scen2':[slider17/100],
+                    'Acquisition_cost_scen2':[slider16/100],
+                    'Risk_scen2':[slider17/100],
                     'Population_serviced_scen3':[slider11/100],
                     'Total_packages_del_scen3':[slider12/100],
                     'Days_to_1st_pack_scen3': [slider13/100],
                     'Population_aided_per_flown_in_scen3':[slider14/100],
-                    'Acquisition_cost_scen3':[slider18/100],
+                    'Acquisition_cost_scen3':[slider16/100],
+                    'Risk_scen3':[slider17/100],
                     'Scenario1_weight':[slider5/100],
                     'Scenario2_weight':[slider10/100],
                     'Scenario3_weight': [slider15/100],
-                
                 }
             new_data = pd.DataFrame(data)
             # Authenticate with Google Drive API
@@ -1689,10 +1765,10 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
                 file_metadata = {
                 'name': f'{player_name} weights',
                 'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
-                'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                'mimeType': 'text/csv'  # Change MIME type to text/csv for CSV files
             }
         
-                media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
+                media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')),  mimetype='text/csv', resumable=True)
             
                 file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
@@ -1703,7 +1779,7 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
                 file_metadata = {
                 'name': 'unknown_player weights',
                 'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
-                'mimeType': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                'mimeType': 'text/csv'
             }
         
                 media = MediaIoBaseUpload(io.BytesIO(csv_content.encode('utf-8')), mimetype='text/csv', resumable=True)
@@ -1716,9 +1792,9 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
                 #return f'Error: {str(e)}'
             #new_data.to_csv('C:\\Users\\toderinde3\\OneDrive - Georgia Institute of Technology\\HADR_Project\\Year7\\DOE\\player_1_cases.csv', index=False)
             #return new_data.to_dict('records')
-        elif ((slider1+slider2+slider3+slider4+slider16 != 100) or (slider6+slider7+slider8+slider9+slider17 != 100) or (slider11+slider12+slider13+slider14+slider18 != 100)) and (slider5+slider10+slider15 == 100):
+        elif ((slider1+slider2+slider3+slider4+slider16+slider17 != 100) or (slider6+slider7+slider8+slider9+slider16+slider17 != 100) or (slider11+slider12+slider13+slider14+slider16+slider17 != 100)) and (slider5+slider10+slider15 == 100):
             return [], True,False, False
-        elif (slider1+slider2+slider3+slider4+slider16 == 100) and (slider6+slider7+slider8+slider9+slider17 == 100) and (slider11+slider12+slider13+slider14+slider18 == 100) and (slider5+slider10+slider15 != 100):
+        elif (slider1+slider2+slider3+slider4+slider16+slider17 == 100) and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 != 100):
             return [], False,True, False
         else:
             return [], True,True, False
