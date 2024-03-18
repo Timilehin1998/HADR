@@ -1971,7 +1971,7 @@ def update_data_table3(n_clicks,player_name, slider7, slider8, slider9, slider10
 
             if player_name:
                 file_metadata = {
-                'name': f'{player_name} vignette_weights',
+                'name': f'{player_name} vignette',
                 'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
                 'mimeType': 'text/csv'  # Change MIME type to text/csv for CSV files
             }
@@ -1985,7 +1985,7 @@ def update_data_table3(n_clicks,player_name, slider7, slider8, slider9, slider10
            
             else:
                 file_metadata = {
-                'name': 'unknown_player vignette_weights',
+                'name': 'unknown_player vignette',
                 'parents': ['1TjmMTkUM-DeKqUILko9JTBEpgNxDAZKv'],  # Parent folder ID
                 'mimeType': 'text/csv'
             }
