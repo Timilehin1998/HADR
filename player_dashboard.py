@@ -208,7 +208,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
         #html.Hr(className="my-2"),
         html.Div(
     [
-        dbc.Label("Population in need serviced", html_for="slider"),
+        dbc.Label("Cargo delivery flight time [h]", html_for="slider"),
         dcc.Slider(id="slider1", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
     className="mb-3",
@@ -234,7 +234,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
 
         html.Div(
     [
-        dbc.Label("Population aided per flown in cargo flight time", html_for="slider"),
+        dbc.Label("Population Aided / flown in cargo sortie", html_for="slider"),
         dcc.Slider(id="slider4", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
     ],
     className="mb-3",
@@ -324,7 +324,7 @@ style = {
     ),
 
 LEFT_COLUMN_VIGNETTE = html.Div(
-    [   html.H4(children="Challenging Vignette 1", className="display-5"),
+    [   html.H4(children="Design Vignette", className="display-5"),
         html.Hr(className="my-2"),
         html.H5(children="Select Vignette Weights", style={"marginTop": 30, "marginBottom":20}, className="display-7"),
         #html.Hr(className="my-2"),
@@ -348,15 +348,15 @@ cv1_description = dbc.Card(
         [
                 dbc.CardBody(
                     [
-                        html.H5("Challenging Vignette 1 Description", className="card-title"),
+                        html.H5("Design Vignette Description", className="card-title"),
                         
             html.H6([
                 html.Ul([
                     html.Li(f"Storm Path: Cyclone Winston"),
                     html.Li(f"Storm Radius: 75 km"),
-                    html.Li(f"Forward Operating Base: Labasa"),
+                    html.Li(f"Forward Operating Base: Suva"),
                     html.Li(f"Delivery Window: Day only"),
-                    html.Li(f"Loading: Internal only"),
+                    html.Li(f"Loading: Internal and External"),
                 ])
             ]),
             
@@ -538,7 +538,7 @@ RIGHT_COLUMN = dbc.Jumbotron(
 
 MIDDLE_COLUMN_VIGNETTE = html.Div(
     [
-        html.H4(children="Challenging Vignette 2", className="display-5"),
+        html.H4(children="Challenging Vignette 1", className="display-5"),
         html.Hr(className="my-2"),
         html.H5(children="Select Vignette Weights", style={"marginTop": 30, "marginBottom":20}, className="display-7"),
         #html.Hr(className="my-2"),
@@ -563,13 +563,13 @@ cv2_description = dbc.Card(
         [
                 dbc.CardBody(
                     [
-                        html.H5("Challenging Vignette 2 Description", className="card-title"),
+                        html.H5("Challenging Vignette 1 Description", className="card-title"),
             html.H6([
                 html.Ul([
-                    html.Li(f"Storm Path: Cyclone Evan"),
+                    html.Li(f"Storm Path: Cyclone Winston"),
                     html.Li(f"Storm Radius: 75 km"),
                     html.Li(f"Forward Operating Base: Labasa"),
-                    html.Li(f"Delivery Window: Day and Night"),
+                    html.Li(f"Delivery Window: Day only"),
                     html.Li(f"Loading: Internal and External"),
                 ])
             ]),
@@ -642,7 +642,7 @@ cv2_description = dbc.Card(
 
 RIGHT_COLUMN_VIGNETTE = html.Div(
     [
-        html.H4(children="Challenging Vignette 3", className="display-5"),
+        html.H4(children="Challenging Vignette 2", className="display-5"),
         html.Hr(className="my-2"),
         html.H5(children="Select Vignette Weights", style={"marginTop": 30, "marginBottom":20}, className="display-7"),
         #html.Hr(className="my-2"),
@@ -666,10 +666,10 @@ cv3_description = dbc.Card(
         [
                 dbc.CardBody(
                     [
-                        html.H5("Challenging Vignette 3 Description", className="card-title"),
+                        html.H5("Challenging Vignette 2 Description", className="card-title"),
             html.H6([
                 html.Ul([
-                    html.Li(f"Storm Path: Cyclone Evan"),
+                    html.Li(f"Storm Path: Cyclone Winston"),
                     html.Li(f"Storm Radius: 75 km"),
                     html.Li(f"Forward Operating Base: Suva"),
                     html.Li(f"Delivery Window: Day only"),
@@ -1890,7 +1890,7 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
     ctx = dash.callback_context
     if ctx.triggered_id == 'submit-button' and n_clicks is not None: 
         if (slider1+slider2+slider3+slider4+slider5+slider6 == 100): #and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
-            data = {'Population_serviced':[slider1/100],
+            data = {'Cargo_del_time':[slider1/100],
                     'Total_packages_del':[slider2/100],
                     'Days_to_1st_pack': [slider3/100],
                     'Population_aided_per_flown_in':[slider4/100],
