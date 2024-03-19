@@ -1875,7 +1875,7 @@ def update_data_table(n_clicks, input_value, player_name, cargo_acq, maritime_ac
         
 @app.callback(
     [Output('data-table2', 'data'),
-     Output('alert1','is_open'),
+     #Output('alert1','is_open'),
      Output('alert2','is_open'),],
     [Input('submit-button', 'n_clicks'), Input('player-input', 'value')],
     [State('slider1', 'value'),
@@ -1889,7 +1889,7 @@ def update_data_table(n_clicks, input_value, player_name, cargo_acq, maritime_ac
 def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4, slider5, slider6):
     ctx = dash.callback_context
     if ctx.triggered_id == 'submit-button' and n_clicks is not None: 
-        if (slider1+slider2+slider3+slider4+slider5+slider6 == 100): #and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
+        #if (slider1+slider2+slider3+slider4+slider5+slider6 == 100): #and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
             data = {'Cargo_del_time':[slider1/100],
                     'Total_packages_del':[slider2/100],
                     'Days_to_1st_pack': [slider3/100],
@@ -1913,7 +1913,7 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
             
                 file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-                return new_data.to_dict('records'), False, True 
+                return new_data.to_dict('records'), True 
         
            
             else:
@@ -1927,26 +1927,26 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
             
                 file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-                return new_data.to_dict('records'),False, True
+                return new_data.to_dict('records'), True
         
             #except Exception as e:
                 #return f'Error: {str(e)}'
             #new_data.to_csv('C:\\Users\\toderinde3\\OneDrive - Georgia Institute of Technology\\HADR_Project\\Year7\\DOE\\player_1_cases.csv', index=False)
             #return new_data.to_dict('records')
-        elif (slider1+slider2+slider3+slider4+slider5+slider6 != 100): #or (slider6+slider7+slider8+slider9+slider16+slider17 != 100) or (slider11+slider12+slider13+slider14+slider16+slider17 != 100)) and (slider5+slider10+slider15 == 100):
-            return [], True,False
+        #elif (slider1+slider2+slider3+slider4+slider5+slider6 != 100): #or (slider6+slider7+slider8+slider9+slider16+slider17 != 100) or (slider11+slider12+slider13+slider14+slider16+slider17 != 100)) and (slider5+slider10+slider15 == 100):
+            #return [], True,False
         # elif (slider1+slider2+slider3+slider4+slider16+slider17 == 100) and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 != 100):
         #     return [], False,True, False
-        else:
-            return [], True,False
+        #else:
+            #return [], True,False
     else:
         # If the button is not clicked yet, return an empty data dict
-        return [], False,False  
+        return [], False 
     
 
 @app.callback(
     [Output('data-table3', 'data'),
-     Output('alert3','is_open'),
+     #Output('alert3','is_open'),
      Output('alert4','is_open'),],
     [Input('submit-button2', 'n_clicks'), Input('player-input', 'value')],
     [State('slider7', 'value'),
@@ -1958,7 +1958,7 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
 def update_data_table3(n_clicks,player_name, slider7, slider8, slider9, slider10):
     ctx = dash.callback_context
     if ctx.triggered_id == 'submit-button2' and n_clicks is not None: 
-        if (slider7+slider8+slider9+slider10 == 100): #and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
+        #if (slider7+slider8+slider9+slider10 == 100): #and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
             data = {'Baseline':[slider7/100],
                     'CV1':[slider8/100],
                     'CV2': [slider9/100],
@@ -1980,7 +1980,7 @@ def update_data_table3(n_clicks,player_name, slider7, slider8, slider9, slider10
             
                 file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-                return new_data.to_dict('records'), False, True 
+                return new_data.to_dict('records'), True 
         
            
             else:
@@ -1994,21 +1994,21 @@ def update_data_table3(n_clicks,player_name, slider7, slider8, slider9, slider10
             
                 file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-                return new_data.to_dict('records'),False, True
+                return new_data.to_dict('records'), True
         
             #except Exception as e:
                 #return f'Error: {str(e)}'
             #new_data.to_csv('C:\\Users\\toderinde3\\OneDrive - Georgia Institute of Technology\\HADR_Project\\Year7\\DOE\\player_1_cases.csv', index=False)
             #return new_data.to_dict('records')
-        elif (slider7+slider8+slider9+slider10!= 100): #or (slider6+slider7+slider8+slider9+slider16+slider17 != 100) or (slider11+slider12+slider13+slider14+slider16+slider17 != 100)) and (slider5+slider10+slider15 == 100):
-            return [], True,False
+        #elif (slider7+slider8+slider9+slider10!= 100): #or (slider6+slider7+slider8+slider9+slider16+slider17 != 100) or (slider11+slider12+slider13+slider14+slider16+slider17 != 100)) and (slider5+slider10+slider15 == 100):
+            #return [], True,False
         # elif (slider1+slider2+slider3+slider4+slider16+slider17 == 100) and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 != 100):
         #     return [], False,True, False
-        else:
-            return [], True,False
+        #else:
+            #return [], True,False
     else:
         # If the button is not clicked yet, return an empty data dict
-        return [], False,False 
+        return [], False
     
 if __name__ == "__main__":
     app.run_server(debug=True)
