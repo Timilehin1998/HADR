@@ -208,8 +208,8 @@ LEFT_COLUMN_WEIGHT = html.Div(
         #html.Hr(className="my-2"),
         html.Div(
     [
-        dbc.Label("Cargo delivery flight time [h]", html_for="slider"),
-        dcc.Slider(id="slider1", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dbc.Label("Population aided in 15 days", html_for="slider"),
+        dcc.Slider(id="slider1", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
 ),
@@ -218,7 +218,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
         html.Div(
     [
         dbc.Label("Total packages delivered", html_for="slider"),
-        dcc.Slider(id="slider2", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dcc.Slider(id="slider2", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
 ),
@@ -227,7 +227,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
         html.Div(
     [
         dbc.Label("Days to 1st package delivered", html_for="slider"),
-        dcc.Slider(id="slider3", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dcc.Slider(id="slider3", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
 ),
@@ -235,7 +235,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
         html.Div(
     [
         dbc.Label("Population Aided / flown in cargo sortie", html_for="slider"),
-        dcc.Slider(id="slider4", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dcc.Slider(id="slider4", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
 ),
@@ -244,7 +244,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
         html.Div(
     [
         dbc.Label("Acquisition cost", html_for="slider"),
-        dcc.Slider(id="slider5", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dcc.Slider(id="slider5", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
 ),
@@ -253,7 +253,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
         html.Div(
     [
         dbc.Label("Risk", html_for="slider"),
-        dcc.Slider(id="slider6", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dcc.Slider(id="slider6", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
 ),
@@ -278,7 +278,7 @@ BASELINE_COLUMN_VIGNETTE = html.Div(
         html.Div(
     [
         #dbc.Label("Population in neeed serviced", html_for="slider"),
-        dcc.Slider(id="slider7", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dcc.Slider(id="slider7", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
         ),       
     ],
@@ -331,7 +331,7 @@ LEFT_COLUMN_VIGNETTE = html.Div(
         html.Div(
     [
         #dbc.Label("Population in neeed serviced", html_for="slider"),
-        dcc.Slider(id="slider8", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dcc.Slider(id="slider8", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
         ),       
     ],
@@ -545,7 +545,7 @@ MIDDLE_COLUMN_VIGNETTE = html.Div(
         html.Div(
     [
         #dbc.Label("Population in neeed serviced", html_for="slider"),
-        dcc.Slider(id="slider9", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dcc.Slider(id="slider9", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
         ),       
     ],
@@ -566,7 +566,7 @@ cv2_description = dbc.Card(
                         html.H5("Challenging Vignette 1 Description", className="card-title"),
             html.H6([
                 html.Ul([
-                    html.Li(f"Storm Path: Cyclone Winston"),
+                    html.Li(f"Storm Path: Cyclone Evan"),
                     html.Li(f"Storm Radius: 75 km"),
                     html.Li(f"Forward Operating Base: Labasa"),
                     html.Li(f"Delivery Window: Day only"),
@@ -649,7 +649,7 @@ RIGHT_COLUMN_VIGNETTE = html.Div(
         html.Div(
     [
         #dbc.Label("Population in neeed serviced", html_for="slider"),
-        dcc.Slider(id="slider10", min=0, max=100, step=5,marks={i: str(i) for i in range(0, 101, 10)}, value=0),
+        dcc.Slider(id="slider10", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
         ),       
     ],
