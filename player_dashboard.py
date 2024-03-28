@@ -1913,7 +1913,7 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
             
                 file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-                return new_data.to_dict('records'), True 
+                return new_data.to_dict('records'), False, True 
         
            
             else:
@@ -1980,7 +1980,7 @@ def update_data_table3(n_clicks,player_name, slider7, slider8, slider9, slider10
             
                 file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-                return new_data.to_dict('records'), True 
+                return new_data.to_dict('records'), False, True 
         
            
             else:
@@ -1994,7 +1994,7 @@ def update_data_table3(n_clicks,player_name, slider7, slider8, slider9, slider10
             
                 file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-                return new_data.to_dict('records'), True
+                return new_data.to_dict('records'), False, True
         
             #except Exception as e:
                 #return f'Error: {str(e)}'
