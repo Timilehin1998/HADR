@@ -202,13 +202,13 @@ LEFT_COLUMN = dbc.Jumbotron(
 
 LEFT_COLUMN_WEIGHT = html.Div(
     [
-        html.H4(children="Select Criteria Weights", className="display-5"),
+        html.H4(children="Select Criteria Weights", className="display-5", style={"font-size": 22}),
         html.Hr(className="my-2"),
         #html.H5(children="Select Criteria Weights", style={"marginTop": 30}, className="display-7"),
         #html.Hr(className="my-2"),
         html.Div(
     [
-        dbc.Label("Population aided in 15 days", html_for="slider"),
+        dbc.Label("Population aided in 15 days", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider1", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
@@ -217,7 +217,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
        
         html.Div(
     [
-        dbc.Label("Total packages delivered", html_for="slider"),
+        dbc.Label("Total packages delivered", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider2", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
@@ -226,7 +226,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
 
         html.Div(
     [
-        dbc.Label("Days to 1st package delivered", html_for="slider"),
+        dbc.Label("Days to 1st package delivered", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider3", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
@@ -234,7 +234,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
 
         html.Div(
     [
-        dbc.Label("Population Aided / flown in cargo sortie", html_for="slider"),
+        dbc.Label("Population Aided / flown in cargo sortie", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider4", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
@@ -243,7 +243,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
         
         html.Div(
     [
-        dbc.Label("Acquisition cost", html_for="slider"),
+        dbc.Label("Acquisition cost", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider5", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
@@ -252,7 +252,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
        
         html.Div(
     [
-        dbc.Label("Risk", html_for="slider"),
+        dbc.Label("Acquisition risk", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider6", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
@@ -324,7 +324,7 @@ style = {
     ),
 
 LEFT_COLUMN_VIGNETTE = html.Div(
-    [   html.H4(children="Design Vignette", className="display-5"),
+    [   html.H4(children="Challenging Vignette 1", className="display-5"),
         html.Hr(className="my-2"),
         html.H5(children="Select Vignette Weights", style={"marginTop": 30, "marginBottom":20}, className="display-7"),
         #html.Hr(className="my-2"),
@@ -348,7 +348,7 @@ cv1_description = dbc.Card(
         [
                 dbc.CardBody(
                     [
-                        html.H5("Design Vignette Description", className="card-title"),
+                        html.H5("Challenging Vignette 1 Description", className="card-title"),
                         
             html.H6([
                 html.Ul([
@@ -538,7 +538,7 @@ RIGHT_COLUMN = dbc.Jumbotron(
 
 MIDDLE_COLUMN_VIGNETTE = html.Div(
     [
-        html.H4(children="Challenging Vignette 1", className="display-5"),
+        html.H4(children="Challenging Vignette 2", className="display-5"),
         html.Hr(className="my-2"),
         html.H5(children="Select Vignette Weights", style={"marginTop": 30, "marginBottom":20}, className="display-7"),
         #html.Hr(className="my-2"),
@@ -563,7 +563,7 @@ cv2_description = dbc.Card(
         [
                 dbc.CardBody(
                     [
-                        html.H5("Challenging Vignette 1 Description", className="card-title"),
+                        html.H5("Challenging Vignette 2 Description", className="card-title"),
             html.H6([
                 html.Ul([
                     html.Li(f"Storm Path: Cyclone Evan"),
@@ -642,7 +642,7 @@ cv2_description = dbc.Card(
 
 RIGHT_COLUMN_VIGNETTE = html.Div(
     [
-        html.H4(children="Challenging Vignette 2", className="display-5"),
+        html.H4(children="Challenging Vignette 3", className="display-5"),
         html.Hr(className="my-2"),
         html.H5(children="Select Vignette Weights", style={"marginTop": 30, "marginBottom":20}, className="display-7"),
         #html.Hr(className="my-2"),
@@ -666,7 +666,7 @@ cv3_description = dbc.Card(
         [
                 dbc.CardBody(
                     [
-                        html.H5("Challenging Vignette 2 Description", className="card-title"),
+                        html.H5("Challenging Vignette 3 Description", className="card-title"),
             html.H6([
                 html.Ul([
                     html.Li(f"Storm Path: Cyclone Winston"),
@@ -1875,7 +1875,7 @@ def update_data_table(n_clicks, input_value, player_name, cargo_acq, maritime_ac
         
 @app.callback(
     [Output('data-table2', 'data'),
-     #Output('alert1','is_open'),
+     Output('alert1','is_open'),
      Output('alert2','is_open'),],
     [Input('submit-button', 'n_clicks'), Input('player-input', 'value')],
     [State('slider1', 'value'),
@@ -1889,7 +1889,7 @@ def update_data_table(n_clicks, input_value, player_name, cargo_acq, maritime_ac
 def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4, slider5, slider6):
     ctx = dash.callback_context
     if ctx.triggered_id == 'submit-button' and n_clicks is not None: 
-        #if (slider1+slider2+slider3+slider4+slider5+slider6 == 100): #and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
+        if (slider1+slider2+slider3+slider4+slider5+slider6 == 100): #and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
             data = {'Cargo_del_time':[slider1/100],
                     'Total_packages_del':[slider2/100],
                     'Days_to_1st_pack': [slider3/100],
@@ -1927,26 +1927,26 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
             
                 file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-                return new_data.to_dict('records'), True
+                return new_data.to_dict('records'), False, True
         
             #except Exception as e:
                 #return f'Error: {str(e)}'
             #new_data.to_csv('C:\\Users\\toderinde3\\OneDrive - Georgia Institute of Technology\\HADR_Project\\Year7\\DOE\\player_1_cases.csv', index=False)
             #return new_data.to_dict('records')
-        #elif (slider1+slider2+slider3+slider4+slider5+slider6 != 100): #or (slider6+slider7+slider8+slider9+slider16+slider17 != 100) or (slider11+slider12+slider13+slider14+slider16+slider17 != 100)) and (slider5+slider10+slider15 == 100):
-            #return [], True,False
+        elif (slider1+slider2+slider3+slider4+slider5+slider6 != 100): #or (slider6+slider7+slider8+slider9+slider16+slider17 != 100) or (slider11+slider12+slider13+slider14+slider16+slider17 != 100)) and (slider5+slider10+slider15 == 100):
+            return [], True,False
         # elif (slider1+slider2+slider3+slider4+slider16+slider17 == 100) and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 != 100):
         #     return [], False,True, False
-        #else:
-            #return [], True,False
+        else:
+            return [], True,False
     else:
         # If the button is not clicked yet, return an empty data dict
-        return [], False 
+        return [], False, False 
     
 
 @app.callback(
     [Output('data-table3', 'data'),
-     #Output('alert3','is_open'),
+     Output('alert3','is_open'),
      Output('alert4','is_open'),],
     [Input('submit-button2', 'n_clicks'), Input('player-input', 'value')],
     [State('slider7', 'value'),
@@ -1958,7 +1958,7 @@ def update_data_table2(n_clicks,player_name, slider1, slider2, slider3, slider4,
 def update_data_table3(n_clicks,player_name, slider7, slider8, slider9, slider10):
     ctx = dash.callback_context
     if ctx.triggered_id == 'submit-button2' and n_clicks is not None: 
-        #if (slider7+slider8+slider9+slider10 == 100): #and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
+        if (slider7+slider8+slider9+slider10 == 100): #and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 == 100):
             data = {'Baseline':[slider7/100],
                     'CV1':[slider8/100],
                     'CV2': [slider9/100],
@@ -2000,15 +2000,15 @@ def update_data_table3(n_clicks,player_name, slider7, slider8, slider9, slider10
                 #return f'Error: {str(e)}'
             #new_data.to_csv('C:\\Users\\toderinde3\\OneDrive - Georgia Institute of Technology\\HADR_Project\\Year7\\DOE\\player_1_cases.csv', index=False)
             #return new_data.to_dict('records')
-        #elif (slider7+slider8+slider9+slider10!= 100): #or (slider6+slider7+slider8+slider9+slider16+slider17 != 100) or (slider11+slider12+slider13+slider14+slider16+slider17 != 100)) and (slider5+slider10+slider15 == 100):
-            #return [], True,False
+        elif (slider7+slider8+slider9+slider10!= 100): #or (slider6+slider7+slider8+slider9+slider16+slider17 != 100) or (slider11+slider12+slider13+slider14+slider16+slider17 != 100)) and (slider5+slider10+slider15 == 100):
+            return [], True,False
         # elif (slider1+slider2+slider3+slider4+slider16+slider17 == 100) and (slider6+slider7+slider8+slider9+slider16+slider17 == 100) and (slider11+slider12+slider13+slider14+slider16+slider17 == 100) and (slider5+slider10+slider15 != 100):
         #     return [], False,True, False
-        #else:
-            #return [], True,False
+        else:
+            return [], True,False
     else:
         # If the button is not clicked yet, return an empty data dict
-        return [], False
+        return [], False, False
     
 if __name__ == "__main__":
     app.run_server(debug=True)
