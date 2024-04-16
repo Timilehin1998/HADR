@@ -217,7 +217,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
        
         html.Div(
     [
-        dbc.Label("Total packages delivered", html_for="slider", style={"font-size": 22}),
+        dbc.Label("Population aided per flown in cargo flight time", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider2", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
@@ -234,7 +234,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
 
         html.Div(
     [
-        dbc.Label("Population Aided / flown in cargo sortie", html_for="slider", style={"font-size": 22}),
+        dbc.Label("Population aided per flown in cargo sortie", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider4", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
@@ -243,7 +243,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
         
         html.Div(
     [
-        dbc.Label("Acquisition cost", html_for="slider", style={"font-size": 22}),
+        dbc.Label("Program cost", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider5", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
@@ -252,7 +252,7 @@ LEFT_COLUMN_WEIGHT = html.Div(
        
         html.Div(
     [
-        dbc.Label("Acquisition risk", html_for="slider", style={"font-size": 22}),
+        dbc.Label("Program risk", html_for="slider", style={"font-size": 22}),
         dcc.Slider(id="slider6", min=0, max=100, step=1,marks={i: str(i) for i in range(0, 101, 100)}, value=0, tooltip={"placement": "bottom", "always_visible": True}),
     ],
     className="mb-3",
